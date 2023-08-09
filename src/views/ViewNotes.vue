@@ -1,71 +1,59 @@
 <template>
-	<div class="notes">
-		<div class="card has-background-success-dark mb-5 p-4">
-			<div class="field">
-				<div class="control">
-					<textarea
-							v-model="newNote"
-							class="textarea"
-							placeholder="Add a new note"
-							ref="newNoteRef"
-					/>
-				</div>
-			</div>
+  <div class="notes">
 
-			<div class="field is-grouped is-grouped-right">
-				<div class="control">
-					<button
-							@click="addNote"
-							:disabled="!newNote"
-							class="button is-link has-background-success"
-					>
-						Add New Note
-					</button>
-				</div>
-			</div>
-		</div>
+    <AddEditNote
+      v-model="newNote"
+      placeholder="Add a new note"
+      ref="addEditNoteRef"
+    >
+      <template #buttons>
+        <button
+          @click="addNote"
+          :disabled="!newNote"
+          class="button is-link has-background-success"
+        >
+          Add New Note
+        </button>
+      </template>
+    </AddEditNote>
+    <pre>{{newNote}}</pre>
+    <Note
+      v-for="note in storeNotes.notes"
+      :key="note.id"
+      :note="note"
+    />
 
-		<Note
-				v-for="note in notes"
-				:key="note.id"
-				:note="note"
-				@handleDelete="deleteNote"
-		/>
-	</div>
+  </div>
 </template>
+
 <script setup>
-import {ref} from 'vue'
-import { v4 as uuidv4 } from 'uuid'
-import Note from '@/components/Notes/Note.vue'
 
-const newNote = ref('')
-const newNoteRef = ref(null)
+/*
+  imports
+*/
 
-const notes = ref([
-	{
-		id: 'id1',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque corporis dolorem est eum impedit numquam pariatur quasi, quo veritatis voluptatem.'
-	},
-	{
-		id: 'id2',
-		content: 'Lorem 2 ipsum dolor sit amet, consectetur adipisicing elit. Atque corporis dolorem est eum impedit numquam pariatur quasi, quo veritatis voluptatem.'
-	},
-	{
-		id: 'id3',
-		content: 'Lorem 3 ipsum dolor sit amet, consectetur adipisicing elit. Atque corporis dolorem est eum impedit numquam pariatur quasi, quo veritatis voluptatem.'
-	}
-])
+  import { ref } from 'vue'
+  import Note from '@/components/Notes/Note.vue'
+  import AddEditNote from '@/components/Notes/AddEditNote.vue'
+  import { useStoreNotes } from '@/stores/storeNotes'
 
-const addNote = () => {
-	let note = {
-		id: uuidv4(),
-		content: newNote.value
-	}
-	notes.value.unshift(note)
-	newNote.value = ''
-	newNoteRef.value.focus()
-}
-const deleteNote = id => {
-	notes.value = notes.value.filter(note => note.id !== id)
-}
+/*
+  store
+*/
+
+  const storeNotes = useStoreNotes()
+
+/*
+  notes
+*/
+
+  const newNote = ref('')
+  const addEditNoteRef = ref(null)
+
+  const addNote = () => {
+    storeNotes.addNote(newNote.value)
+    newNote.value = ''
+    addEditNoteRef.value.focusTextarea()
+  }
+
 </script>

@@ -1,22 +1,19 @@
 {
-  "name": "dc-vue-noteballs-app",
-  "private": true,
+  "name": "vue-composition-api-noteballs",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --port 5050"
   },
   "dependencies": {
-    "bulma": "^0.9.4",
-    "pinia": "^2.1.6",
-    "uuid": "^9.0.0",
-    "vue": "^3.3.4",
-    "vue-router": "4"
+    "bulma": "^0.9.3",
+    "pinia": "^2.0.11",
+    "vue": "^3.2.29",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
-    "vite": "^4.4.5"
+    "@vitejs/plugin-vue": "^2.1.0",
+    "vite": "^2.7.13"
   }
 }
