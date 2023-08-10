@@ -36,6 +36,8 @@
   import Note from '@/components/Notes/Note.vue'
   import AddEditNote from '@/components/Notes/AddEditNote.vue'
   import { useStoreNotes } from '@/stores/storeNotes'
+/*import composable watcher*/
+  import { useWatchCharacters } from '@/use/useWatchCharacters'
 
 /*
   store
@@ -55,5 +57,7 @@
     newNote.value = ''
     addEditNoteRef.value.focusTextarea()
   }
+/*and use it with the parameter which is needed to be watching*/
+  useWatchCharacters(newNote, 100)
 
 </script>
